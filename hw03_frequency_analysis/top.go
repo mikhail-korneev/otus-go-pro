@@ -34,10 +34,9 @@ func Top10(s string) []string {
 	})
 
 	keys := make([]string, 0, len(pairs))
-	i := 0
-	for i < 10 {
+	top := min(10, len(pairs))
+	for i := 0; i < top; i++ {
 		keys = append(keys, pairs[i].word)
-		i++
 	}
 
 	return keys
