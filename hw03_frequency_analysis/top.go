@@ -1,14 +1,13 @@
 package hw03frequencyanalysis
 
 import (
-	"fmt"
 	"sort"
 	"strings"
 )
 
-type Pair struct {
-	K string
-	V int
+type WordCountPair struct {
+	word  string
+	count int
 }
 
 func Top10(s string) []string {
@@ -16,34 +15,28 @@ func Top10(s string) []string {
 		return nil
 	}
 
-	// заполняем мэпку с частотами
 	freq := make(map[string]int)
 	words := strings.Fields(s)
 	for _, w := range words {
 		freq[w] += 1
 	}
-	fmt.Println(freq)
 
-	// конвертируем в слайс пар
-	pairs := make([]Pair, 0, len(freq))
-	for k, v := range freq {
-		pairs = append(pairs, Pair{k, v})
+	pairs := make([]WordCountPair, 0, len(freq))
+	for word, count := range freq {
+		pairs = append(pairs, WordCountPair{word, count})
 	}
-
-	// сортируем слайс пар
 	sort.Slice(pairs, func(i, j int) bool {
-		if pairs[i].V == pairs[j].V {
-			return pairs[i].K < pairs[j].K
+		if pairs[i].count == pairs[j].count {
+			return pairs[i].word < pairs[j].word
 		} else {
-			return pairs[i].V > pairs[j].V
+			return pairs[i].count > pairs[j].count
 		}
 	})
 
-	// получаем слайс ключей
 	keys := make([]string, 0, len(pairs))
 	i := 0
 	for i < 10 {
-		keys = append(keys, pairs[i].K)
+		keys = append(keys, pairs[i].word)
 		i++
 	}
 
