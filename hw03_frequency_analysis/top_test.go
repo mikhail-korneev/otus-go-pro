@@ -55,18 +55,16 @@ var textGet10WordsInLexicographicalOrder = `
 	зомби зомби зомби зомби зомби зомби зомби
 	лимон лимон лимон лимон лимон лимон
 	кошак кошак кошак кошак кошак кошак кошак
-	манул манул манул манул манул
-`
+	манул манул манул манул манул`
+
 var textWordFormsAreDifferentWords = `
 	нога нога нога нога нога 
 	ноги ноги ноги
-	ногу ногу ногу ногу
-`
+	ногу ногу ногу ногу`
 
 var textIsCaseSensitive = `
 	нога нога нога нога нога 
-	Нога Нога Нога 
-`
+	Нога Нога Нога `
 
 func TestTop10(t *testing.T) {
 	t.Run("no words in empty string", func(t *testing.T) {

@@ -18,7 +18,7 @@ func Top10(s string) []string {
 	freq := make(map[string]int)
 	words := strings.Fields(s)
 	for _, w := range words {
-		freq[w] += 1
+		freq[w]++
 	}
 
 	pairs := make([]WordCountPair, 0, len(freq))
@@ -28,9 +28,8 @@ func Top10(s string) []string {
 	sort.Slice(pairs, func(i, j int) bool {
 		if pairs[i].count == pairs[j].count {
 			return pairs[i].word < pairs[j].word
-		} else {
-			return pairs[i].count > pairs[j].count
 		}
+		return pairs[i].count > pairs[j].count
 	})
 
 	keys := make([]string, 0, len(pairs))
