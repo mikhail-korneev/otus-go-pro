@@ -50,7 +50,52 @@ func TestCache(t *testing.T) {
 	})
 
 	t.Run("purge logic", func(t *testing.T) {
-		// Write me
+		c := NewCache(3)
+
+		c.Set("a", 100)
+		c.Set("b", 200)
+		c.Set("c", 300)
+
+		c.Clear()
+
+		_, ok := c.Get("a")
+		require.False(t, ok)
+		_, ok = c.Get("b")
+		require.False(t, ok)
+		_, ok = c.Get("c")
+		require.False(t, ok)
+	})
+
+	t.Run("remove when over limit", func(t *testing.T) {
+		c := NewCache(3)
+
+		c.Set("a", 100)
+		c.Set("b", 200)
+		c.Set("c", 300)
+
+		c.Set("d", 400)
+
+		_, ok := c.Get("a")
+		require.False(t, ok)
+	})
+
+	t.Run("remove last used", func(t *testing.T) {
+		c := NewCache(3)
+
+		c.Set("a", 100) // [a]
+		c.Set("b", 200) // [b, a]
+		c.Set("c", 300) // [c, b, a]
+
+		c.Get("a")       // [a, c, b]
+		c.Get("c")       // [c, a, b]
+		c.Set("a", 1001) // [a, c, b]
+		c.Get("b")       // [b, a, c]
+		c.Set("c", 3001) // [c, b, a]
+
+		c.Set("d", 400) // over limit
+
+		_, ok := c.Get("a")
+		require.False(t, ok)
 	})
 }
 
