@@ -42,7 +42,6 @@ func (l *list) PushFront(v interface{}) *ListItem {
 	i := &ListItem{
 		Value: v,
 		Next:  l.front,
-		Prev:  nil,
 	}
 
 	if l.len == 0 {
@@ -61,7 +60,6 @@ func (l *list) PushFront(v interface{}) *ListItem {
 func (l *list) PushBack(v interface{}) *ListItem {
 	i := &ListItem{
 		Value: v,
-		Next:  nil,
 		Prev:  l.back,
 	}
 
@@ -111,18 +109,11 @@ func (l *list) MoveToFront(i *ListItem) {
 	if i == l.back {
 		i.Prev.Next = nil
 		l.back = i.Prev
-
-		l.front.Prev = i
-		i.Next = l.front
-		i.Prev = nil
-		l.front = i
-
-		return
+	} else {
+		// item in the middle
+		i.Prev.Next = i.Next
+		i.Next.Prev = i.Prev
 	}
-
-	// item in the middle
-	i.Prev.Next = i.Next
-	i.Next.Prev = i.Prev
 
 	l.front.Prev = i
 	i.Next = l.front
