@@ -39,7 +39,7 @@ func Run(tasks []Task, n, m int) error {
 					}
 					err := task()
 					if err != nil {
-						fmt.Printf("worker %d: error occured\n", id)
+						fmt.Printf("worker %d: error occurred\n", id)
 						results <- false
 					} else {
 						results <- true
