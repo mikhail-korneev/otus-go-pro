@@ -22,11 +22,3 @@ func fileHash(filePath string) (string, error) {
 	res := fmt.Sprintf("%x", hash.Sum(nil))
 	return res, nil
 }
-
-func removeFile(filePath string) error {
-	if err := os.Remove(filePath); err != nil {
-		fmt.Printf("failed to remove file with err %s\n", err)
-		return err
-	}
-	return nil
-}

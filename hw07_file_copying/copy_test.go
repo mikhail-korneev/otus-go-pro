@@ -1,14 +1,12 @@
 package main
 
 import (
-	"log"
 	"testing"
 
 	"github.com/stretchr/testify/require"
 )
 
 const (
-	ToPath   = "/tmp/out.txt"
 	FromPath = "./testdata/input.txt"
 )
 
@@ -23,104 +21,110 @@ var goldenHashes = map[string]string{
 
 func TestCopy(t *testing.T) {
 	t.Run("out_offset0_limit0", func(t *testing.T) {
+		tmpDir, cleanup := setup(t, "out_offset0_limit0")
 		defer cleanup()
 
+		toPath := tmpDir + "/out.txt"
 		goldenFile := "out_offset0_limit0.txt"
 
 		offset := int64(0)
 		limit := int64(0)
 
-		err := Copy(FromPath, ToPath, offset, limit)
+		err := Copy(FromPath, toPath, offset, limit)
 
 		require.NoError(t, err)
-		actualHash, err := fileHash(ToPath)
+		actualHash, err := fileHash(toPath)
 		require.NoError(t, err)
 		require.Equal(t, goldenHashes[goldenFile], actualHash)
 	})
 
 	t.Run("out_offset0_limit10", func(t *testing.T) {
+		tmpDir, cleanup := setup(t, "out_offset0_limit10")
 		defer cleanup()
 
+		toPath := tmpDir + "/out.txt"
 		goldenFile := "out_offset0_limit10.txt"
 
 		offset := int64(0)
 		limit := int64(10)
 
-		err := Copy(FromPath, ToPath, offset, limit)
+		err := Copy(FromPath, toPath, offset, limit)
 
 		require.NoError(t, err)
-		actualHash, err := fileHash(ToPath)
+		actualHash, err := fileHash(toPath)
 		require.NoError(t, err)
 		require.Equal(t, goldenHashes[goldenFile], actualHash)
 	})
 
 	t.Run("out_offset0_limit1000", func(t *testing.T) {
+		tmpDir, cleanup := setup(t, "out_offset0_limit1000")
 		defer cleanup()
 
+		toPath := tmpDir + "/out.txt"
 		goldenFile := "out_offset0_limit1000.txt"
 
 		offset := int64(0)
 		limit := int64(1000)
 
-		err := Copy(FromPath, ToPath, offset, limit)
+		err := Copy(FromPath, toPath, offset, limit)
 
 		require.NoError(t, err)
-		actualHash, err := fileHash(ToPath)
+		actualHash, err := fileHash(toPath)
 		require.NoError(t, err)
 		require.Equal(t, goldenHashes[goldenFile], actualHash)
 	})
 
 	t.Run("out_offset0_limit10000", func(t *testing.T) {
+		tmpDir, cleanup := setup(t, "out_offset0_limit10000")
 		defer cleanup()
 
+		toPath := tmpDir + "/out.txt"
 		goldenFile := "out_offset0_limit10000.txt"
 
 		offset := int64(0)
 		limit := int64(10000)
 
-		err := Copy(FromPath, ToPath, offset, limit)
+		err := Copy(FromPath, toPath, offset, limit)
 
 		require.NoError(t, err)
-		actualHash, err := fileHash(ToPath)
+		actualHash, err := fileHash(toPath)
 		require.NoError(t, err)
 		require.Equal(t, goldenHashes[goldenFile], actualHash)
 	})
 
 	t.Run("out_offset100_limit1000", func(t *testing.T) {
+		tmpDir, cleanup := setup(t, "out_offset100_limit1000")
 		defer cleanup()
 
+		toPath := tmpDir + "/out.txt"
 		goldenFile := "out_offset100_limit1000.txt"
 
 		offset := int64(100)
 		limit := int64(1000)
 
-		err := Copy(FromPath, ToPath, offset, limit)
+		err := Copy(FromPath, toPath, offset, limit)
 
 		require.NoError(t, err)
-		actualHash, err := fileHash(ToPath)
+		actualHash, err := fileHash(toPath)
 		require.NoError(t, err)
 		require.Equal(t, goldenHashes[goldenFile], actualHash)
 	})
 
 	t.Run("out_offset6000_limit1000", func(t *testing.T) {
+		tmpDir, cleanup := setup(t, "out_offset6000_limit1000")
 		defer cleanup()
 
+		toPath := tmpDir + "/out.txt"
 		goldenFile := "out_offset6000_limit1000.txt"
 
 		offset := int64(6000)
 		limit := int64(1000)
 
-		err := Copy(FromPath, ToPath, offset, limit)
+		err := Copy(FromPath, toPath, offset, limit)
 
 		require.NoError(t, err)
-		actualHash, err := fileHash(ToPath)
+		actualHash, err := fileHash(toPath)
 		require.NoError(t, err)
 		require.Equal(t, goldenHashes[goldenFile], actualHash)
 	})
-}
-
-func cleanup() {
-	if err := removeFile(ToPath); err != nil {
-		log.Fatalf("failed to remove file with err %s\n", err)
-	}
 }
